@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Secrets — never commit broker credentials / certs
+secrets.yaml
+*.pem
+*.key
+*.crt
+config/passwd
+config/mosquitto/passwd
+config/*.env
+!config/*.env.example
+certs/
+*.ppk
+
+# Test outputs
+test-script/output/
+
+# OS
+.DS_Store

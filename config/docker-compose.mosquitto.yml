@@ -1,0 +1,23 @@
+# Mosquitto broker for the cloud VM, to sit alongside your existing Home Assistant
+# container. Either add this `mosquitto` service to your existing HA compose file
+# (so they share a network), or run it standalone with:
+#     docker compose -f docker-compose.mosquitto.yml up -d
+#
+# Copy the config/mosquitto/ folder to the VM (or recreate it there) next to this file.
+
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:
+      - "1883:1883"          # POC: exposed with password auth (see security note in docs)
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+# If Home Assistant is in this same compose file, add mosquitto to the same network
+# and HA can reach the broker at hostname `mosquitto:1883`. If HA is a separate
+# container, point HA at the VM's Docker bridge gateway (172.17.0.1:1883) or its
+# private IP — see docs/02-home-assistant-mosquitto.md.

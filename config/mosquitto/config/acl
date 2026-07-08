@@ -1,0 +1,13 @@
+# Mosquitto ACL — least privilege, even in the POC.
+#
+# hass : the Home Assistant backend. Needs full read/write (it subscribes to
+#        discovery + all device topics, and may publish commands).
+# iot  : sensor devices / the simulator. May ONLY publish their telemetry and
+#        their Home Assistant discovery configs. No read, no other topics.
+
+user hass
+topic readwrite #
+
+user iot
+topic write home/#
+topic write homeassistant/#
